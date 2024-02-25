@@ -1,34 +1,15 @@
-package br.com.masterclass.superpecas.model;
+package br.com.masterclass.superpecas.model.DTO;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import br.com.masterclass.superpecas.model.CarroModel;
 
-@Entity
-@Table(name = "Pecas")
-public class PecaModel {
-
-    @Id
-    @Column(name = "PecaID", nullable = false)
+public class PecaDTO {
     int id;
-
-    @Column(name = "Nome", nullable = false)
     String nome;
-
-    @Column(name = "Descricao", nullable = false)
     String descricao;
-
-    @Column(name = "NumeroSerie", nullable = false)
     String numeroSerie;
-
-    @Column(name = "Fabricante", nullable = false)
     String fabricante;
-
-    @Column(name = "ModeloCarro", nullable = false)
     String modeloCarro;
-
-    @OneToOne(optional = false)
-    @JoinColumn(name = "CarroID", nullable = false)
-    CarroModel carro;
+    CarroDTO carro;
 
     public int getId() {
         return id;
@@ -78,11 +59,11 @@ public class PecaModel {
         this.modeloCarro = modeloCarro;
     }
 
-    public CarroModel getCarro() {
+    public CarroDTO getCarro() {
         return carro;
     }
 
-    public void setCarro(CarroModel carro) {
+    public void setCarro(CarroDTO carro) {
         this.carro = carro;
     }
 }
