@@ -11,12 +11,17 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/carro")
@@ -50,6 +55,26 @@ public class CarroController {
         List<CarroDTO> listaDTO = Arrays.asList(modelMapper.map(carros, CarroDTO[].class));
 
         return new ResponseEntity<>(listaDTO, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Lista carros paginado", description = "Lista todos os carros por página.")
+    @ApiResponses({ @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = CarroDTO[].class)) })})
+    @RequestMapping(value = "/listaTodosPaginado", method = RequestMethod.GET)
+    public ResponseEntity<Page<CarroModel>> listaCarros(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size) {
+        Pageable paging = PageRequest.of(page, size);
+        Page<CarroModel> carros = carroService.listaCarrosPaginado(paging);
+
+        return new ResponseEntity<>(carros, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Lista carros por nome e/ou fabricante paginado", description = "Lista todos os carros por nome e/ou fabricante por página.")
+    @ApiResponses({ @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = CarroDTO[].class)) })})
+    @RequestMapping(value = {"/listaTodosPaginado/{nome}", "/listaTodosPaginado/{nome}/{fabricante}" }, method = RequestMethod.GET)
+    public ResponseEntity<Page<CarroModel>> listaCarros(@PathVariable String nome, @PathVariable(required = false) String fabricante, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size) {
+        Pageable paging = PageRequest.of(page, size);
+        Page<CarroModel> carros = carroService.listaCarrosPorNomeEOuFabricantePaginado(nome, fabricante, paging);
+
+        return new ResponseEntity<>(carros, HttpStatus.OK);
     }
 
     @Operation(summary = "Grava carro", description = "Grava um novo carro no sistema.")
@@ -86,8 +111,12 @@ public class CarroController {
     @ApiResponses({ @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = CarroDTO.class)) })})
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity excluiCarro(@Parameter(description = "Id do Carro", required = true)  @PathVariable int id) {
-        carroService.excluiCarro(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        boolean retorno = carroService.excluiCarro(id);
+        if (retorno)
+            return new ResponseEntity<>(HttpStatus.OK);
+        else {
+            return new ResponseEntity<>("Carro possui peças, não é possível remover", HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

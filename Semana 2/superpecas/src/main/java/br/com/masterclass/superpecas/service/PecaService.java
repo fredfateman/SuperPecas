@@ -5,6 +5,8 @@ import br.com.masterclass.superpecas.model.PecaModel;
 import br.com.masterclass.superpecas.repository.CarroRepository;
 import br.com.masterclass.superpecas.repository.PecaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,8 +25,16 @@ public class PecaService {
         return  pecaRepository.findAll();
     }
 
+    public Page<PecaModel> listaPecasPaginado(Pageable pageable){
+        return pecaRepository.findAll(pageable);
+    }
+
+    public Page<PecaModel> listaPecasPorNomeEOuNumeroSerie(String nome, String numeroSerie, Pageable pageable){
+        return pecaRepository.findByNomeOrNumeroSerie(nome, numeroSerie, pageable);
+    }
+
     public PecaModel gravaPeca(PecaModel peca){
-        PecaModel pecaModel = pecaRepository.findById(peca.getId()).orElse(null);
+        PecaModel pecaModel = pecaRepository.findByNomeOrNumeroSerie(peca.getNome(), peca.getNumeroSerie());
 
         if (pecaModel == null){
             return pecaRepository.save(peca);
@@ -34,17 +44,11 @@ public class PecaService {
     }
 
     public PecaModel editaPeca(PecaModel peca){
-        PecaModel pecaModel = pecaRepository.findById(peca.getId()).orElse(null);
+        PecaModel existeMesmoNome = pecaRepository.findByNomeOrNumeroSerie(peca.getNome(), peca.getNumeroSerie());
 
-        if (pecaModel == null){
+        if (existeMesmoNome != null && existeMesmoNome.getId()!= peca.getId()){
             return null;
         }
-
-      //  CarroModel existeMesmoNome = pecaRepository.findByNomeModeloOrCodigoUnico(carro.getNomeModelo(), carro.getCodigoUnico());
-
-      //  if (existeMesmoNome != null && existeMesmoNome.getId()!= carro.getId()){
-      //      return null;
-      //  }
 
         return pecaRepository.save(peca);
     }
@@ -54,4 +58,9 @@ public class PecaService {
         if (pecaModel != null)
             pecaRepository.delete(pecaModel);
     }
+
+    public List<PecaModel> listaPecasPorFabricante(int carroId){
+        return pecaRepository.findByCarroId(carroId);
+    }
+
 }
