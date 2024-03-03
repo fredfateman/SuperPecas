@@ -1,0 +1,37 @@
+.sidenav-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .logo {
+    width: 80%;
+    margin-bottom: 15px;
+  }
+  
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .user-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-bottom: 5px;
+  }
+  
+  .user-name {
+    font-size: 16px;
+    color: #333;
+    /* Outros estilos conforme necessário */
+  }
+
+  .active-link {
+    background-color: lightgrey; /* Substitua pela tonalidade de azul desejada */
+    color: white; /* Cor do texto, se necessário */
+  }

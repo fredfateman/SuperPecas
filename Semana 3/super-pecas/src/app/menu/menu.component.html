@@ -1,0 +1,25 @@
+<mat-sidenav-container class="sidenav-container" style="height: 100vh;">
+    <mat-sidenav #sidenav mode="side" opened="true" style="width: 200px;">
+  
+      <!-- Seção do topo com logo, imagem e nome do usuário -->
+      <div class="sidenav-header">
+        <img src="assets/images/super-pecas.png" alt="Logo do Projeto" class="logo">
+        <div class="user-info">
+          <img src="assets/images/user.png" alt="Imagem do Usuário" class="user-image">
+          <span class="user-name">Administrador</span> <!-- Adicione o nome do usuário aqui -->
+        </div>
+      </div>
+  
+      <!-- Conteúdo do menu lateral -->
+      <mat-nav-list>    
+        <a mat-list-item routerLink="/home" routerLinkActive="active-link">Home</a>
+        <a mat-list-item routerLink="/carros" routerLinkActive="active-link">Carros</a>
+        <a mat-list-item routerLink="/pecas" routerLinkActive="active-link">Peças</a>
+        <!-- Adicione mais links conforme necessário -->
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <!-- Conteúdo principal da sua aplicação -->
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
