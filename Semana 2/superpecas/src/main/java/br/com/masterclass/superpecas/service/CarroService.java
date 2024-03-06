@@ -37,6 +37,10 @@ public class CarroService {
         return carroRepository.findByNomeModeloEOuFabricante(nome, fabricante, pageable);
     }
 
+    public List<String> listaFabricantes(){
+        return carroRepository.findAllFabricantes();
+    }
+
     public CarroModel gravaCarro(CarroModel carro){
         CarroModel carroModel = carroRepository.findByNomeModeloOrCodigoUnico(carro.getNomeModelo(), carro.getCodigoUnico());
 

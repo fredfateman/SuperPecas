@@ -77,16 +77,23 @@ public class CarroController {
         return new ResponseEntity<>(carros, HttpStatus.OK);
     }
 
+    @Operation(summary = "Lista fabricantes", description = "Lista todos os fabricantes.")
+    @ApiResponses({ @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = String[].class)) })})
+        @RequestMapping(value = "/listaTodosFabricantes", method = RequestMethod.GET)
+    public ResponseEntity<List<String>> listaFabricantes() {
+        List<String> fabricantes = carroService.listaFabricantes();
+        return new ResponseEntity<>(fabricantes, HttpStatus.OK);
+    }
     @Operation(summary = "Grava carro", description = "Grava um novo carro no sistema.")
     @ApiResponses({ @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = CarroDTO.class)) }),
             @ApiResponse(responseCode = "400", description = "Dados inválidos", content = @Content) })
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<CarroDTO> gravaCarro(@Parameter(description = "Dados do Carro", required = true) @RequestBody CarroDTO data) {
+    public ResponseEntity gravaCarro(@Parameter(description = "Dados do Carro", required = true) @RequestBody CarroDTO data) {
         CarroModel carroModel = modelMapper.map(data, CarroModel.class);
         carroModel = carroService.gravaCarro(carroModel);
 
         if (carroModel == null){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Erro ao gravar carro", HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>(modelMapper.map(carroModel, CarroDTO.class), HttpStatus.OK);
@@ -96,12 +103,12 @@ public class CarroController {
     @ApiResponses({ @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = CarroDTO.class)) }),
             @ApiResponse(responseCode = "400", description = "Dados inválidos", content = @Content) })
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity<CarroDTO> editaCarro(@Parameter(description = "Dados do Carro", required = true) @RequestBody CarroDTO data) {
+    public ResponseEntity editaCarro(@Parameter(description = "Dados do Carro", required = true) @RequestBody CarroDTO data) {
         CarroModel carroModel = modelMapper.map(data, CarroModel.class);
         carroModel = carroService.editaCarro(carroModel);
 
         if (carroModel == null){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Erro ao atualizar carro", HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>(modelMapper.map(carroModel, CarroDTO.class), HttpStatus.OK);

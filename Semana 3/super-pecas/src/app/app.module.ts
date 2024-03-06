@@ -17,7 +17,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
 
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -29,6 +30,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { RemoverCarroDialog } from './carros/remover-dialog.component';
+import { MatOptionModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,8 @@ import { RemoverCarroDialog } from './carros/remover-dialog.component';
     MatInputModule,
     MatButtonModule,
     MatDialogModule,
+    MatOptionModule,
+    MatSelectModule,
     TableModule,
     ButtonModule,
     PaginatorModule,

@@ -35,4 +35,8 @@ export class CarrosService {
         return this.http.put<Carro>(`${environment.host}/carro`, carro);
     }
 
+    getTodosFabricantes() {
+        return this.http.get<String[]>(`${environment.host}/carro/listaTodosFabricantes`);
+    }
+
 };

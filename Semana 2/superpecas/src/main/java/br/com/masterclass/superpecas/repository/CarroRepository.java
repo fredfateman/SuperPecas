@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
+
 public interface CarroRepository extends CrudRepository<CarroModel, Integer> {
 
     public CarroModel findByNomeModelo(String nomeModelo);
@@ -16,5 +18,8 @@ public interface CarroRepository extends CrudRepository<CarroModel, Integer> {
 
     @Query(value = "SELECT c FROM CarroModel c WHERE lower(c.nomeModelo) like lower(concat('%', ?1,'%')) AND (?2 IS NULL OR lower(c.fabricante) like lower(concat('%', ?2,'%')))")
     Page<CarroModel> findByNomeModeloEOuFabricante(String nome, String fabricante, Pageable pageable);
+
+    @Query(nativeQuery = true, value = "SELECT c.fabricante FROM Carros c GROUP BY c.fabricante")
+    List<String> findAllFabricantes();
 
 }
