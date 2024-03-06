@@ -1,1 +1,58 @@
-teste
+<div class="container">
+    <div class="page-header">
+        <img src="assets/images/car-logo.png" alt="Logotipo" class="logo">
+        <h1 *ngIf="type === 'adicionar'">Adicionar novo carro</h1>
+        <h1 *ngIf="type === 'editar' && loading == false">Editar carro - {{ carro!.nomeModelo }} </h1>
+    </div>
+    <div class="listagem-carros">
+        <div class="actions">
+            <button mat-raised-button color="warn" routerLink="/carros">Voltar</button>
+          </div>
+        <div class="card">
+            <form [formGroup]="carroForm" (ngSubmit)="gravarCarro()">
+                <div style="display: flex; flex-wrap: wrap;">
+                    <mat-form-field style="flex-grow: 1; width: 33%; padding: 10px; min-width: 200px;">
+                        <mat-label>Nome do modelo</mat-label>
+                        <input matInput formControlName="nomeModelo" />
+                        <mat-icon matPrefix fontIcon="directions_car">
+                        </mat-icon>
+                        <mat-error *ngIf="f.nomeModelo.hasError('required')">O campo nome do modelo é
+                            obrigatório.</mat-error>
+                        <mat-error *ngIf="f.nomeModelo.hasError('minlength')">O campos nome do modelo deve ter no mínimo
+                            3 caracteres.</mat-error>
+                        <mat-error *ngIf="f.nomeModelo.hasError('maxlength')">O campo nome do modelo deve ter no máximo
+                            255 caracteres.</mat-error>
+                    </mat-form-field>
+                    <mat-form-field  style="flex-grow: 1; width: 33%; padding: 10px; min-width: 200px;">
+                        <mat-label>Fabricante</mat-label>
+                        <input matInput formControlName="fabricante" />
+                        <mat-icon matPrefix fontIcon="factory">
+                        </mat-icon>
+                        <mat-error *ngIf="f.fabricante.hasError('required')">O campo fabricante é
+                            obrigatório.</mat-error>
+                        <mat-error *ngIf="f.fabricante.hasError('minlength')">O campo fabricante deve ter no mínimo 3
+                            caracteres.</mat-error>
+                        <mat-error *ngIf="f.fabricante.hasError('maxlength')">O campo fabricante deve ter no máximo 255
+                            caracteres.</mat-error>
+                    </mat-form-field>
+                    <mat-form-field  style="flex-grow: 1; width: 33%; padding: 10px; min-width: 200px;">
+                        <mat-label>Código único</mat-label>
+                        <input matInput formControlName="codigoUnico" />
+                        <mat-icon  matPrefix fontIcon="code">
+                        </mat-icon>
+                        <mat-error *ngIf="f.codigoUnico.hasError('required')">O campo código único é
+                            obrigatório.</mat-error>
+                        <mat-error *ngIf="f.codigoUnico.hasError('minlength')">O campo código único deve ter no mínimo 3
+                            caracteres.</mat-error>
+                        <mat-error *ngIf="f.codigoUnico.hasError('maxlength')">O campo código único deve ter no máximo
+                            255 caracteres.</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="form-actions">
+                    <button type="button" mat-button (click)="limparFormulario()">Limpar</button>
+                    <button type="submit" mat-raised-button color="primary">Gravar</button>
+                  </div>
+            </form>
+        </div>
+    </div>
+</div>
