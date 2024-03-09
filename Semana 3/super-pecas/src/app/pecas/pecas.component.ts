@@ -87,5 +87,4 @@ export class PecasComponent {
     this.page = (event.first / 10);
     this.pesquisarPecasPorNome(this.page);
   }
-
 }

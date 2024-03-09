@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CarrosService } from '../../service/carros.service';
 import { Top10Fabricantes } from '../../model/top10fabricantes.model';
 import { Subject, takeUntil } from 'rxjs';
