@@ -1,6 +1,8 @@
 package br.com.masterclass.superpecas.service;
 
 import br.com.masterclass.superpecas.model.CarroModel;
+import br.com.masterclass.superpecas.model.DTO.TopCarroPecasDTO;
+import br.com.masterclass.superpecas.model.DTO.TopFabricantesDTO;
 import br.com.masterclass.superpecas.model.PecaModel;
 import br.com.masterclass.superpecas.repository.CarroRepository;
 import br.com.masterclass.superpecas.repository.PecaRepository;
@@ -61,6 +63,10 @@ public class PecaService {
 
     public List<PecaModel> listaPecasPorFabricante(int carroId){
         return pecaRepository.findByCarroId(carroId);
+    }
+
+    public List<TopCarroPecasDTO> listaTop10CarrosComMaisPecas(){
+        return pecaRepository.findTop10CarrosComMaisPecas();
     }
 
 }

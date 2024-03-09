@@ -23,18 +23,6 @@
                         <mat-error *ngIf="f.nomeModelo.hasError('maxlength')">O campo nome do modelo deve ter no máximo
                             255 caracteres.</mat-error>
                     </mat-form-field>
-                    <!-- <mat-form-field  style="flex-grow: 1; width: 33%; padding: 10px; min-width: 200px;">
-                        <mat-label>Fabricante</mat-label>
-                        <input matInput formControlName="fabricante" />
-                        <mat-icon matPrefix fontIcon="factory">
-                        </mat-icon>
-                        <mat-error *ngIf="f.fabricante.hasError('required')">O campo fabricante é
-                            obrigatório.</mat-error>
-                        <mat-error *ngIf="f.fabricante.hasError('minlength')">O campo fabricante deve ter no mínimo 3
-                            caracteres.</mat-error>
-                        <mat-error *ngIf="f.fabricante.hasError('maxlength')">O campo fabricante deve ter no máximo 255
-                            caracteres.</mat-error>
-                    </mat-form-field> -->
                     <mat-form-field style="flex-grow: 1; width: 33%; padding: 10px; min-width: 200px;">
                         <mat-label>Fabricante</mat-label>
                         <mat-select formControlName="fabricante">
@@ -44,7 +32,6 @@
                             <mat-option *ngFor="let fabricante of fabricantes" [value]="fabricante">
                                 {{fabricante}}
                             </mat-option>
-                            <mat-option>teste</mat-option>
                         </mat-select>
                         <mat-error *ngIf="f.fabricante.hasError('required')">O campo fabricante é
                             obrigatório.</mat-error>

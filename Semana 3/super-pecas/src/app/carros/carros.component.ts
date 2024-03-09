@@ -18,6 +18,8 @@ export class CarrosComponent {
   termoPesquisa!: string;
   itemsCount: number = 0;
   page: number = 0;
+  first: number = 0;
+  rows: number = 10;
 
   constructor(private carrosService: CarrosService, private _notifications: NotificationsService, public dialog: MatDialog) { }
 
@@ -28,7 +30,7 @@ export class CarrosComponent {
   pesquisarCarrosPorNomeModelo(page: number = 0) {
     this.page = 0;
     if (this.termoPesquisa == undefined || this.termoPesquisa == "") {
-      this.carrosService.getTodosCarros(page)
+      this.carrosService.getTodosCarrosPaginado(page)
         .pipe(takeUntil(this.unsubscribe))
         .subscribe((result: any) => {
 
@@ -60,9 +62,6 @@ export class CarrosComponent {
     });
 
   }
-
-  first: number = 0;
-  rows: number = 10;
 
   onPageChange(event: any) {
     this.first = event.first;

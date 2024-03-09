@@ -1,1 +1,39 @@
-<p>home works!</p>
+<div class="container">
+    <div class="page-header">
+        <img src="assets/images/logo_super_pecas.png" alt="Logotipo" class="logo">
+        <h1>Bem-vindo ao Super Peças</h1>
+    </div>
+    <div style="display: flex; flex-wrap: wrap;">
+        <div style="flex-grow: 1; width: 33%; padding: 10px 10px 10px 0px; min-width: 200px;">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Top 10 Fabricantes</mat-card-title>
+                    <mat-card-subtitle>Listagem dos 10 maiores fabricantes</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <ng-container *ngIf="_reloadPie">
+                        <div style="margin-top: 30px;">
+                            <canvasjs-chart [options]="chartOptionsPie"></canvasjs-chart>
+                        </div>
+                    </ng-container>
+
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div style="flex-grow: 1; width: 33%; padding: 10px 0px 10px 10px; min-width: 200px;">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Carros e Peças</mat-card-title>
+                    <mat-card-subtitle>TOP 10 carros com mais peças cadastrasdas no sistema</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <ng-container *ngIf="_reloadColumn">
+                        <div style="margin-top: 30px;">
+                            <canvasjs-chart [options]="chartOptionsColumn"></canvasjs-chart>
+                        </div>
+                    </ng-container>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

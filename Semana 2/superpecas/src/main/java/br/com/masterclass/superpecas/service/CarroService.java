@@ -1,6 +1,7 @@
 package br.com.masterclass.superpecas.service;
 
 import br.com.masterclass.superpecas.model.CarroModel;
+import br.com.masterclass.superpecas.model.DTO.TopFabricantesDTO;
 import br.com.masterclass.superpecas.model.PecaModel;
 import br.com.masterclass.superpecas.repository.CarroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,5 +78,9 @@ public class CarroService {
         } else {
             return false;
         }
+    }
+
+    public List<TopFabricantesDTO> listaTop10Fabricantes(){
+        return carroRepository.findTop10Fabricantes();
     }
 }

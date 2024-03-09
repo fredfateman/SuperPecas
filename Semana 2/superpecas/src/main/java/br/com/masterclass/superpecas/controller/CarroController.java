@@ -2,6 +2,7 @@ package br.com.masterclass.superpecas.controller;
 
 import br.com.masterclass.superpecas.model.CarroModel;
 import br.com.masterclass.superpecas.model.DTO.CarroDTO;
+import br.com.masterclass.superpecas.model.DTO.TopFabricantesDTO;
 import br.com.masterclass.superpecas.service.CarroService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -126,4 +127,11 @@ public class CarroController {
         }
     }
 
+    @Operation(summary = "Lista TOP 10 fabricantes", description = "Lista TOP 10 fabricantes.")
+    @ApiResponses({ @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = TopFabricantesDTO[].class)) })})
+    @RequestMapping(value = "/listaTop10Fabricantes", method = RequestMethod.GET)
+    public ResponseEntity<List<TopFabricantesDTO>> listaTop10Fabricantes() {
+        List<TopFabricantesDTO> fabricantes = carroService.listaTop10Fabricantes();
+        return new ResponseEntity<>(fabricantes, HttpStatus.OK);
+    }
 }

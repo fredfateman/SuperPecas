@@ -4,6 +4,7 @@ import { CarrosComponent } from './carros/carros.component';
 import { PecasComponent } from './pecas/pecas.component';
 import { HomeComponent } from './home/home.component';
 import { CarroEditComponent } from './carros/carro-edit.component';
+import { PecasEditComponent } from './pecas/pecas-edit.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home'},
@@ -12,6 +13,8 @@ const routes: Routes = [
   { path: 'carros/adicionar', component: CarroEditComponent, data: { type: 'adicionar' } },
   { path: 'carros/editar/:id', component: CarroEditComponent, data: { type: 'editar' }  },
   { path: 'pecas', component: PecasComponent },
+  { path: 'pecas/adicionar', component: PecasEditComponent, data: { type: 'adicionar' } },
+  { path: 'pecas/editar/:id', component: PecasEditComponent, data: { type: 'editar' }  },
 ];
 
 @NgModule({

@@ -3,6 +3,8 @@ package br.com.masterclass.superpecas.controller;
 import br.com.masterclass.superpecas.model.CarroModel;
 import br.com.masterclass.superpecas.model.DTO.CarroDTO;
 import br.com.masterclass.superpecas.model.DTO.PecaDTO;
+import br.com.masterclass.superpecas.model.DTO.TopCarroPecasDTO;
+import br.com.masterclass.superpecas.model.DTO.TopFabricantesDTO;
 import br.com.masterclass.superpecas.model.PecaModel;
 import br.com.masterclass.superpecas.service.CarroService;
 import br.com.masterclass.superpecas.service.PecaService;
@@ -61,7 +63,7 @@ public class PecaController {
     @Operation(summary = "Lista peças paginado", description = "Lista todas as peças por página.")
     @ApiResponses({ @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PecaDTO[].class)) })})
     @RequestMapping(value = "/listaTodosPaginado", method = RequestMethod.GET)
-    public ResponseEntity<Page<PecaModel>> listaPecasPaginado(@PathVariable String nome, @PathVariable(required = false) String numeroSerie, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size) {
+    public ResponseEntity<Page<PecaModel>> listaPecasPaginado(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size) {
         Pageable paging = PageRequest.of(page, size);
         Page<PecaModel> pecas = pecaService.listaPecasPaginado(paging);
 
@@ -97,7 +99,7 @@ public class PecaController {
     @ApiResponses({ @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PecaDTO.class)) }),
             @ApiResponse(responseCode = "400", description = "Dados inválidos", content = @Content) })
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity<PecaDTO> editaPeca(@RequestBody CarroDTO data) {
+    public ResponseEntity<PecaDTO> editaPeca(@RequestBody PecaDTO data) {
         PecaModel pecaModel = modelMapper.map(data, PecaModel.class);
         pecaModel = pecaService.editaPeca(pecaModel);
 
@@ -114,6 +116,14 @@ public class PecaController {
     public ResponseEntity excluiPeca(@PathVariable int id) {
          pecaService.excluiPeca(id);
          return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "Lista TOP 10 Carros com mais peças", description = "Lista TOP 10 Carros com mais peças.")
+    @ApiResponses({ @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = TopFabricantesDTO[].class)) })})
+    @RequestMapping(value = "/listaTop10CarroComMaisPecas", method = RequestMethod.GET)
+    public ResponseEntity<List<TopCarroPecasDTO>> listaTop10CarroComMaisPecas() {
+        List<TopCarroPecasDTO> carros = pecaService.listaTop10CarrosComMaisPecas();
+        return new ResponseEntity<>(carros, HttpStatus.OK);
     }
 
 }

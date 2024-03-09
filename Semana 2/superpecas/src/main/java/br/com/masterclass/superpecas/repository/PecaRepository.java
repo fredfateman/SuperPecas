@@ -1,6 +1,8 @@
 package br.com.masterclass.superpecas.repository;
 
 import br.com.masterclass.superpecas.model.CarroModel;
+import br.com.masterclass.superpecas.model.DTO.TopCarroPecasDTO;
+import br.com.masterclass.superpecas.model.DTO.TopFabricantesDTO;
 import br.com.masterclass.superpecas.model.PecaModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,4 +20,9 @@ public interface PecaRepository extends JpaRepository<PecaModel, Integer> {
     Page<PecaModel> findByNomeOrNumeroSerie(String nome, String numeroSerie, Pageable pageable);
 
     List<PecaModel> findByCarroId(int carroId);
+
+    @Query(nativeQuery = true, value = "SELECT Count(pe.PecaId) 'quantidade', CONCAT(ca.NomeModelo, '/', ca.Fabricante) 'carro' FROM Pecas pe "
+        + "INNER JOIN Carros ca ON ca.CarroId = pe.CarroId "
+        + "GROUP BY ca.NomeModelo, ca.Fabricante ORDER BY Count(pe.PecaId) DESC LIMIT 10")
+    List<TopCarroPecasDTO> findTop10CarrosComMaisPecas();
 }

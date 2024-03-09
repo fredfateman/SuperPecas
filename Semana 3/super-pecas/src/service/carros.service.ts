@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { environment } from './../environments/environment';
 import { Carro } from '../model/carros.model';
+import { Top10Fabricantes } from '../model/top10fabricantes.model';
 
 @Injectable({
     providedIn: 'root'
@@ -15,7 +16,11 @@ export class CarrosService {
         return this.http.get<Carro>(`${environment.host}/carro/${id}`);
     }
 
-    getTodosCarros(page: number = 0) {
+    getTodosCarros() {
+        return this.http.get<Carro[]>(`${environment.host}/carro/listaTodos`);
+    }
+
+    getTodosCarrosPaginado(page: number = 0) {
         return this.http.get<Carro[]>(`${environment.host}/carro/listaTodosPaginado?page=${page}&size=10`);
     }
 
@@ -37,6 +42,10 @@ export class CarrosService {
 
     getTodosFabricantes() {
         return this.http.get<String[]>(`${environment.host}/carro/listaTodosFabricantes`);
+    }
+
+    getTop10Fabricantes(){
+        return this.http.get<Top10Fabricantes[]>(`${environment.host}/carro/listaTop10Fabricantes`);
     }
 
 };

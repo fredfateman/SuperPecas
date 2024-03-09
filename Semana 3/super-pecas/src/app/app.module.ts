@@ -19,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
 
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -26,11 +27,15 @@ import { PaginatorModule } from 'primeng/paginator';
 
 import { CarrosService } from '../service/carros.service';
 import { CarroEditComponent } from './carros/carro-edit.component';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { RemoverCarroDialog } from './carros/remover-dialog.component';
 import { MatOptionModule } from '@angular/material/core';
+import { PecasService } from '../service/pecas.service';
+import { PecasEditComponent } from './pecas/pecas-edit.component';
+
+import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 
 @NgModule({
   declarations: [
@@ -40,6 +45,7 @@ import { MatOptionModule } from '@angular/material/core';
     CarroEditComponent,
     RemoverCarroDialog,
     PecasComponent,
+    PecasEditComponent,
     HomeComponent
   ],
   imports: [
@@ -48,7 +54,6 @@ import { MatOptionModule } from '@angular/material/core';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    HttpClientModule,
     MatSidenavModule,
     MatListModule,
     MatIconModule,
@@ -58,15 +63,19 @@ import { MatOptionModule } from '@angular/material/core';
     MatDialogModule,
     MatOptionModule,
     MatSelectModule,
+    MatCardModule,
     TableModule,
     ButtonModule,
     PaginatorModule,
+    CanvasJSAngularChartsModule,
     SimpleNotificationsModule.forRoot()
   ],
   providers: [
+    provideHttpClient(withInterceptorsFromDi(), withFetch()),
     provideClientHydration(),
     provideAnimationsAsync(),
-    CarrosService
+    CarrosService, 
+    PecasService
   ],
   bootstrap: [AppComponent]
 })

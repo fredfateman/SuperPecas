@@ -16,7 +16,6 @@
         </button>
       </div>
     </div>
-    <div class="car1ros-grid">
       <div class="card">
         <p-table [value]="carro" [paginator]="false" [rows]="10" [tableStyle]="{ 'min-width': '50rem' }">
           <ng-template pTemplate="header">
@@ -50,6 +49,5 @@
           <p-paginator (onPageChange)="onPageChange($event)" [showCurrentPageReport]="true" [first]="first" [rows]="rows" [totalRecords]="itemsCount" currentPageReportTemplate="Exibindo {first} até {last} de {totalRecords} registros"></p-paginator>
       </div>
       </div>
-    </div>
   </div>
 </div>
