@@ -35,7 +35,7 @@
               <td>{{ carro.codigoUnico }}</td>
               <td>
                 <a [routerLink]="['/carros/editar', carro.id]"><mat-icon aria-hidden="false" fontIcon="edit"></mat-icon></a>
-                <a href="javascript:void(0)" (click)="removerCarro(carro.id)"><mat-icon aria-hidden="false" fontIcon="delete"></mat-icon></a>
+                <a href="javascript:void(0)" (click)="removerCarro(carro)"><mat-icon aria-hidden="false" fontIcon="delete"></mat-icon></a>
             </td>
             </tr>
           </ng-template>

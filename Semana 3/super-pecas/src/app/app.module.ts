@@ -30,7 +30,7 @@ import { CarroEditComponent } from './carros/carro-edit.component';
 import { provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 
 import { SimpleNotificationsModule } from 'angular2-notifications';
-import { RemoverCarroDialog } from './carros/remover-dialog.component';
+import { Dialog } from '../component/dialog.component';
 import { MatOptionModule } from '@angular/material/core';
 import { PecasService } from '../service/pecas.service';
 import { PecasEditComponent } from './pecas/pecas-edit.component';
@@ -43,7 +43,7 @@ import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
     MenuComponent,
     CarrosComponent,
     CarroEditComponent,
-    RemoverCarroDialog,
+    Dialog,
     PecasComponent,
     PecasEditComponent,
     HomeComponent

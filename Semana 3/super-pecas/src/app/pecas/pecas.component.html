@@ -39,7 +39,7 @@
                 <td>{{ peca.carro.nomeModelo  + "/" + peca.carro.fabricante }}</td>
                 <td>
                   <a [routerLink]="['/pecas/editar', peca.id]"><mat-icon aria-hidden="false" fontIcon="edit"></mat-icon></a>
-                  <a href="javascript:void(0)" (click)="removerPeca(peca.id)"><mat-icon aria-hidden="false" fontIcon="delete"></mat-icon></a>
+                  <a href="javascript:void(0)" (click)="removerPeca(peca)"><mat-icon aria-hidden="false" fontIcon="delete"></mat-icon></a>
               </td>
               </tr>
             </ng-template>

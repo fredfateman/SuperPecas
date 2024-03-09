@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { Peca } from '../../model/pecas.model';
 import { Subject, takeUntil } from 'rxjs';
 import { PecasService } from '../../service/pecas.service';
-import { NotificationsService } from 'angular2-notifications';
+import { NotificationType, NotificationsService } from 'angular2-notifications';
 import { MatDialog } from '@angular/material/dialog';
+import { Dialog } from '../../component/dialog.component';
 
 @Component({
   selector: 'app-pecas',
@@ -31,33 +32,52 @@ export class PecasComponent {
     if (this.termoPesquisa == undefined || this.termoPesquisa == "") {
       this.pecasService.getTodasPecas(page)
         .pipe(takeUntil(this.unsubscribe))
-        .subscribe((result: any) => {
-          this.itemsCount = result.totalElements;
-          this.peca = result.content;
+        .subscribe({
+          next: (result: any) => {
+            this.itemsCount = result.totalElements;
+            this.peca = result.content;
+          },
+          error: (error) => {
+            this._notifications.create("Erro", error.error, NotificationType.Error);
+          }
         });
     } else {
       this.pecasService.getPecasByNome(this.termoPesquisa, page)
         .pipe(takeUntil(this.unsubscribe))
-        .subscribe((result: any) => {
-          this.itemsCount = result.totalElements;
-          this.peca = result.content;
+        .subscribe({
+          next: (result: any) => {
+            this.itemsCount = result.totalElements;
+            this.peca = result.content;
+          },
+          error: (error) => {
+            this._notifications.create("Erro", "Ocorreu um erro ao remover a peça", NotificationType.Error);
+          }
         });
     }
   }
 
-  removerPeca(id: number) {
-    // const dialogRef = this.dialog.open(RemoverCarroDialog, {
-    //   data: {
-    //     id: id
-    //   }
-    // });
+  removerPeca(peca: Peca) {
+    const dialogRef = this.dialog.open(Dialog, {
+      data: {
+        texto: `Deseja realmente remover a peça <b>${peca.nome}</b>?`
+      }
+    });
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result == true) {
-    //     this._notifications.create("Sucesso", "Carro removido com sucesso", NotificationType.Success);
-    //     this.pesquisarPecasPorNome();
-    //   }
-    // });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == true) {
+        this.pecasService.removerPeca(peca.id)
+          .pipe(takeUntil(this.unsubscribe))
+          .subscribe({
+            next: () => {
+              this._notifications.create("Sucesso", "Peça removida com sucesso", NotificationType.Success);
+              this.pesquisarPecasPorNome();
+            },
+            error: (error) => {
+              this._notifications.create("Erro", error.error, NotificationType.Error);
+            }
+          });
+      }
+    });
 
   }
 

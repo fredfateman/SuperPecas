@@ -4,7 +4,7 @@ import { Carro } from '../../model/carros.model';
 import { Subject, isEmpty, takeUntil } from 'rxjs';
 import { NotificationType, NotificationsService } from 'angular2-notifications';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { RemoverCarroDialog } from './remover-dialog.component';
+import { Dialog } from '../../component/dialog.component';
 
 @Component({
   selector: 'app-carros',
@@ -33,7 +33,6 @@ export class CarrosComponent {
       this.carrosService.getTodosCarrosPaginado(page)
         .pipe(takeUntil(this.unsubscribe))
         .subscribe((result: any) => {
-
           this.itemsCount = result.totalElements;
           this.carro = result.content;
         });
@@ -47,17 +46,26 @@ export class CarrosComponent {
     }
   }
 
-  removerCarro(id: number) {
-    const dialogRef = this.dialog.open(RemoverCarroDialog, {
+  removerCarro(carro: Carro) {
+    const dialogRef = this.dialog.open(Dialog, {
       data: {
-        id: id
+        texto: `Deseja realmente remover o carro <b>${carro.nomeModelo}</b>?`
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result == true) {
-        this._notifications.create("Sucesso", "Carro removido com sucesso", NotificationType.Success);
-        this.pesquisarCarrosPorNomeModelo();
+        this.carrosService.removerCarro(carro.id)
+          .pipe(takeUntil(this.unsubscribe))
+          .subscribe({
+            next: () => {
+              this._notifications.create("Sucesso", "Carro removido com sucesso", NotificationType.Success);
+              this.pesquisarCarrosPorNomeModelo();
+            },
+            error: (error) => {
+              this._notifications.create("Erro", "Ocorreu um erro ao remover o carro", NotificationType.Error);
+            }
+          });
       }
     });
 
