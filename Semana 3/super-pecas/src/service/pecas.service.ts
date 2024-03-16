@@ -20,8 +20,8 @@ export class PecasService {
         return this.http.get<Peca[]>(`${environment.host}/peca/listaTodosPaginado?page=${page}&size=10`);
     }
 
-    getPecasByNome(nome: String, page: number = 0) {
-        return this.http.get<Peca[]>(`${environment.host}/peca/listaTodosPaginado/${nome}?page=${page}&size=10`);
+    getPecasByTermo(termo: String, page: number = 0) {
+        return this.http.get<Peca[]>(`${environment.host}/peca/listaTodosPaginado/${termo}?page=${page}&size=10`);
     }
 
     removerPeca(id: number) {

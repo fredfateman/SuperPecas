@@ -9,9 +9,9 @@
         <div class="search">
           <mat-form-field appearance="fill">
             <mat-label>Pesquisar</mat-label>
-            <input matInput [(ngModel)]="termoPesquisa" (keyup.enter)="pesquisarPecasPorNome()">
+            <input matInput [(ngModel)]="termoPesquisa" (keyup.enter)="pesquisarPorTermo()">
           </mat-form-field>
-          <button mat-icon-button (click)="pesquisarPecasPorNome()">
+          <button mat-icon-button (click)="pesquisarPorTermo()">
             <mat-icon>search</mat-icon>
           </button>
         </div>

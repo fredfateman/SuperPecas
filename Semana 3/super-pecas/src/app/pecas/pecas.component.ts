@@ -24,10 +24,15 @@ export class PecasComponent {
   constructor(private pecasService: PecasService, private _notifications: NotificationsService, public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.pesquisarPecasPorNome();
+    this.pesquisarPecas();
   }
 
-  pesquisarPecasPorNome(page: number = 0) {
+  pesquisarPorTermo() {
+    this.resetPage();
+    this.pesquisarPecas();
+  }
+
+  pesquisarPecas(page: number = 0) {
     this.page = 0;
     if (this.termoPesquisa == undefined || this.termoPesquisa == "") {
       this.pecasService.getTodasPecas(page)
@@ -42,7 +47,7 @@ export class PecasComponent {
           }
         });
     } else {
-      this.pecasService.getPecasByNome(this.termoPesquisa, page)
+      this.pecasService.getPecasByTermo(this.termoPesquisa, page)
         .pipe(takeUntil(this.unsubscribe))
         .subscribe({
           next: (result: any) => {
@@ -70,7 +75,7 @@ export class PecasComponent {
           .subscribe({
             next: () => {
               this._notifications.create("Sucesso", "Peça removida com sucesso", NotificationType.Success);
-              this.pesquisarPecasPorNome();
+              this.pesquisarPecas();
             },
             error: (error) => {
               this._notifications.create("Erro", error.error, NotificationType.Error);
@@ -78,13 +83,19 @@ export class PecasComponent {
           });
       }
     });
+  }
 
+  resetPage() {
+    setTimeout(() => {
+      this.first = 0;
+      this.page = 0;
+    }, 100);
   }
 
   onPageChange(event: any) {
     this.first = event.first;
     this.rows = event.rows;
     this.page = (event.first / 10);
-    this.pesquisarPecasPorNome(this.page);
+    this.pesquisarPecas(this.page);
   }
 }

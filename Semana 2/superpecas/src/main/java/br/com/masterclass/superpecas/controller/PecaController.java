@@ -70,12 +70,12 @@ public class PecaController {
         return new ResponseEntity<>(pecas, HttpStatus.OK);
     }
 
-    @Operation(summary = "Lista peças por nome e/ou número de série paginado", description = "Lista todas as peças por nome e/ou número de série por página.")
+    @Operation(summary = "Lista peças por nome ou número de série paginado", description = "Lista todas as peças por nome e/ou número de série por página.")
     @ApiResponses({ @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PecaDTO[].class)) })})
-    @RequestMapping(value = {"/listaTodosPaginado/{nome}", "/listaTodosPaginado/{nome}/{numeroSerie}" }, method = RequestMethod.GET)
-    public ResponseEntity<Page<PecaModel>> listaPecasPorNomeEOuNumeroSeriePaginado(@PathVariable String nome, @PathVariable(required = false) String numeroSerie, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size) {
+    @RequestMapping(value = {"/listaTodosPaginado/{termo}" }, method = RequestMethod.GET)
+    public ResponseEntity<Page<PecaModel>> listaPecasPorNomeEOuNumeroSeriePaginado(@PathVariable String termo, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size) {
         Pageable paging = PageRequest.of(page, size);
-        Page<PecaModel> pecas = pecaService.listaPecasPorNomeEOuNumeroSerie(nome, numeroSerie, paging);
+        Page<PecaModel> pecas = pecaService.listaPecasPorNomeEOuNumeroSerie(termo, paging);
 
         return new ResponseEntity<>(pecas, HttpStatus.OK);
     }

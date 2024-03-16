@@ -34,8 +34,8 @@ public class CarroService {
         return carroRepository.findAll(pageable);
     }
 
-    public Page<CarroModel> listaCarrosPorNomeEOuFabricantePaginado(String nome, String fabricante, Pageable pageable){
-        return carroRepository.findByNomeModeloEOuFabricante(nome, fabricante, pageable);
+    public Page<CarroModel> listaCarrosPorNomeEOuFabricantePaginado(String nome, Pageable pageable){
+        return carroRepository.findByNomeModeloEOuFabricante(nome, pageable);
     }
 
     public List<String> listaFabricantes(){
@@ -70,7 +70,12 @@ public class CarroService {
 
     public boolean excluiCarro(int id){
         CarroModel carroModel = carroRepository.findById(id).orElse(null);
-        List<PecaModel> existePeca = pecaService.listaPecasPorFabricante(carroModel.getId());
+
+        if (carroModel == null){
+            return false;
+        }
+
+        List<PecaModel> existePeca = pecaService.listaPecasPorCarroId(carroModel.getId());
 
         if (existePeca.isEmpty()){
             carroRepository.delete(carroModel);

@@ -24,8 +24,8 @@ export class CarrosService {
         return this.http.get<Carro[]>(`${environment.host}/carro/listaTodosPaginado?page=${page}&size=10`);
     }
 
-    getCarrosByNomeModelo(nomeModelo: String, page: number = 0) {
-        return this.http.get<Carro[]>(`${environment.host}/carro/listaTodosPaginado/${nomeModelo}?page=${page}&size=10`);
+    getCarrosByTermo(termo: String, page: number = 0) {
+        return this.http.get<Carro[]>(`${environment.host}/carro/listaTodosPaginado/${termo}?page=${page}&size=10`);
     }
 
     removerCarro(id: number) {

@@ -70,10 +70,10 @@ public class CarroController {
 
     @Operation(summary = "Lista carros por nome e/ou fabricante paginado", description = "Lista todos os carros por nome e/ou fabricante por página.")
     @ApiResponses({ @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = CarroDTO[].class)) })})
-    @RequestMapping(value = {"/listaTodosPaginado/{nome}", "/listaTodosPaginado/{nome}/{fabricante}" }, method = RequestMethod.GET)
-    public ResponseEntity<Page<CarroModel>> listaCarros(@PathVariable String nome, @PathVariable(required = false) String fabricante, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size) {
+    @RequestMapping(value = {"/listaTodosPaginado/{termo}"}, method = RequestMethod.GET)
+    public ResponseEntity<Page<CarroModel>> listaCarros(@PathVariable String termo, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size) {
         Pageable paging = PageRequest.of(page, size);
-        Page<CarroModel> carros = carroService.listaCarrosPorNomeEOuFabricantePaginado(nome, fabricante, paging);
+        Page<CarroModel> carros = carroService.listaCarrosPorNomeEOuFabricantePaginado(termo, paging);
 
         return new ResponseEntity<>(carros, HttpStatus.OK);
     }

@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CarrosService } from '../../service/carros.service';
 import { Carro } from '../../model/carros.model';
 import { Subject, takeUntil } from 'rxjs';
 import { NotificationType, NotificationsService } from 'angular2-notifications';
 import { MatDialog } from '@angular/material/dialog';
 import { Dialog } from '../../component/dialog.component';
+import { Paginator } from 'primeng/paginator';
 
 @Component({
   selector: 'app-carros',
@@ -12,6 +13,8 @@ import { Dialog } from '../../component/dialog.component';
   styleUrl: './carros.component.css'
 })
 export class CarrosComponent {
+  @ViewChild('pp', { static: false })
+  paginator!: Paginator;
 
   private unsubscribe = new Subject<void>;
   carro!: Carro[];
@@ -24,11 +27,10 @@ export class CarrosComponent {
   constructor(private carrosService: CarrosService, private _notifications: NotificationsService, public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.pesquisarCarrosPorNomeModelo();
+    this.pesquisarCarros();
   }
 
-  pesquisarCarrosPorNomeModelo(page: number = 0) {
-    this.page = 0;
+  pesquisarCarros(page: number = 0) {
     if (this.termoPesquisa == undefined || this.termoPesquisa == "") {
       this.carrosService.getTodosCarrosPaginado(page)
         .pipe(takeUntil(this.unsubscribe))
@@ -37,7 +39,7 @@ export class CarrosComponent {
           this.carro = result.content;
         });
     } else {
-      this.carrosService.getCarrosByNomeModelo(this.termoPesquisa, page)
+      this.carrosService.getCarrosByTermo(this.termoPesquisa, page)
         .pipe(takeUntil(this.unsubscribe))
         .subscribe((result: any) => {
           this.itemsCount = result.totalElements;
@@ -60,7 +62,7 @@ export class CarrosComponent {
           .subscribe({
             next: () => {
               this._notifications.create("Sucesso", "Carro removido com sucesso", NotificationType.Success);
-              this.pesquisarCarrosPorNomeModelo();
+              this.pesquisarCarros();
             },
             error: (error) => {
               this._notifications.create("Erro", "Ocorreu um erro ao remover o carro", NotificationType.Error);
@@ -71,11 +73,23 @@ export class CarrosComponent {
 
   }
 
+  pesquisarPorTermo() {
+    this.resetPage();
+    this.pesquisarCarros();
+  }
+
   onPageChange(event: any) {
     this.first = event.first;
     this.rows = event.rows;
     this.page = (event.first / 10);
-    this.pesquisarCarrosPorNomeModelo(this.page);
+    this.pesquisarCarros(this.page);
+  }
+
+  resetPage() {
+    setTimeout(() => {
+      this.first = 0;
+      this.page = 0;
+    }, 100);
   }
 
 }

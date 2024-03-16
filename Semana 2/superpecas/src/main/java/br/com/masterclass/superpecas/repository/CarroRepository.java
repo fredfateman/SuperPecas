@@ -17,8 +17,8 @@ public interface CarroRepository extends CrudRepository<CarroModel, Integer> {
 
     Page<CarroModel> findAll(Pageable pageable);
 
-    @Query(value = "SELECT c FROM CarroModel c WHERE lower(c.nomeModelo) like lower(concat('%', ?1,'%')) AND (?2 IS NULL OR lower(c.fabricante) like lower(concat('%', ?2,'%')))")
-    Page<CarroModel> findByNomeModeloEOuFabricante(String nome, String fabricante, Pageable pageable);
+    @Query(value = "SELECT c FROM CarroModel c WHERE lower(c.nomeModelo) like lower(concat('%', ?1,'%')) OR (?1 IS NULL OR lower(c.fabricante) like lower(concat('%', ?1,'%')))")
+    Page<CarroModel> findByNomeModeloEOuFabricante(String nome, Pageable pageable);
 
     @Query(nativeQuery = true, value = "SELECT c.fabricante FROM Carros c GROUP BY c.fabricante")
     List<String> findAllFabricantes();

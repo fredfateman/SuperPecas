@@ -12,12 +12,15 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface PecaRepository extends JpaRepository<PecaModel, Integer> {
-    public PecaModel findByNomeOrNumeroSerie(String nome, String numeroSerie);
 
     Page<PecaModel> findAll(Pageable pageable);
 
-    @Query(value = "SELECT c FROM PecaModel c WHERE lower(c.nome) like lower(concat('%', ?1,'%')) AND (?2 IS NULL OR lower(c.numeroSerie) like lower(concat('%', ?2,'%')))")
-    Page<PecaModel> findByNomeOrNumeroSerie(String nome, String numeroSerie, Pageable pageable);
+    @Query(value = "SELECT c FROM PecaModel c WHERE lower(c.nome) like lower(concat('%', ?1,'%')) OR lower(c.numeroSerie) like lower(concat('%', ?1,'%'))")
+    PecaModel findByNomeOrNumeroSerie(String nome, String numeroSerie);
+
+
+    @Query(value = "SELECT c FROM PecaModel c WHERE lower(c.nome) like lower(concat('%', ?1,'%')) OR lower(c.numeroSerie) like lower(concat('%', ?1,'%')) OR lower(c.fabricante) like lower(concat('%', ?1,'%')) OR lower(c.modeloCarro) like lower(concat('%', ?1,'%'))")
+    Page<PecaModel> findByNomeOrNumeroSerieOrFabricanteOrModeloCarro(String termo, Pageable pageable);
 
     List<PecaModel> findByCarroId(int carroId);
 

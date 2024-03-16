@@ -31,8 +31,8 @@ public class PecaService {
         return pecaRepository.findAll(pageable);
     }
 
-    public Page<PecaModel> listaPecasPorNomeEOuNumeroSerie(String nome, String numeroSerie, Pageable pageable){
-        return pecaRepository.findByNomeOrNumeroSerie(nome, numeroSerie, pageable);
+    public Page<PecaModel> listaPecasPorNomeEOuNumeroSerie(String termo, Pageable pageable){
+        return pecaRepository.findByNomeOrNumeroSerieOrFabricanteOrModeloCarro(termo, pageable);
     }
 
     public PecaModel gravaPeca(PecaModel peca){
@@ -46,6 +46,12 @@ public class PecaService {
     }
 
     public PecaModel editaPeca(PecaModel peca){
+        PecaModel pecaModel = pecaRepository.findById(peca.getId()).orElse(null);
+
+        if (pecaModel == null){
+            return null;
+        }
+
         PecaModel existeMesmoNome = pecaRepository.findByNomeOrNumeroSerie(peca.getNome(), peca.getNumeroSerie());
 
         if (existeMesmoNome != null && existeMesmoNome.getId()!= peca.getId()){
@@ -61,7 +67,7 @@ public class PecaService {
             pecaRepository.delete(pecaModel);
     }
 
-    public List<PecaModel> listaPecasPorFabricante(int carroId){
+    public List<PecaModel> listaPecasPorCarroId(int carroId){
         return pecaRepository.findByCarroId(carroId);
     }
 

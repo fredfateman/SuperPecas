@@ -9,9 +9,9 @@
       <div class="search">
         <mat-form-field appearance="fill">
           <mat-label>Pesquisar</mat-label>
-          <input matInput [(ngModel)]="termoPesquisa" (keyup.enter)="pesquisarCarrosPorNomeModelo()">
+          <input matInput [(ngModel)]="termoPesquisa" (keyup.enter)="pesquisarPorTermo()">
         </mat-form-field>
-        <button mat-icon-button (click)="pesquisarCarrosPorNomeModelo()">
+        <button mat-icon-button (click)="pesquisarPorTermo()">
           <mat-icon>search</mat-icon>
         </button>
       </div>
@@ -46,7 +46,7 @@
         </ng-template>
         </p-table>
         <div class="card flex justify-content-center">
-          <p-paginator (onPageChange)="onPageChange($event)" [showCurrentPageReport]="true" [first]="first" [rows]="rows" [totalRecords]="itemsCount" currentPageReportTemplate="Exibindo {first} até {last} de {totalRecords} registros"></p-paginator>
+          <p-paginator #pp (onPageChange)="onPageChange($event)" [showCurrentPageReport]="true" [first]="first" [rows]="rows" [totalRecords]="itemsCount" currentPageReportTemplate="Exibindo {first} até {last} de {totalRecords} registros"></p-paginator>
       </div>
       </div>
   </div>
