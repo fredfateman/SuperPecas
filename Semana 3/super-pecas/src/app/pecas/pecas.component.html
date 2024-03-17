@@ -36,7 +36,7 @@
                 <td>{{ peca.descricao }}</td>
                 <td>{{ peca.numeroSerie }}</td>
                 <td>{{ peca.fabricante }}</td>
-                <td>{{ peca.carro.nomeModelo  + "/" + peca.carro.fabricante }}</td>
+                <td>{{ peca.carroNomeModelo  + "/" + peca.carroFabricante }}</td>
                 <td>
                   <a [routerLink]="['/pecas/editar', peca.id]"><mat-icon aria-hidden="false" fontIcon="edit"></mat-icon></a>
                   <a href="javascript:void(0)" (click)="removerPeca(peca)"><mat-icon aria-hidden="false" fontIcon="delete"></mat-icon></a>

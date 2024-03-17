@@ -78,7 +78,7 @@ export class PecasComponent {
               this.pesquisarPecas();
             },
             error: (error) => {
-              this._notifications.create("Erro", error.error, NotificationType.Error);
+              this._notifications.create("Erro", "Ocorreu um erro ao remover a peça", NotificationType.Error);
             }
           });
       }

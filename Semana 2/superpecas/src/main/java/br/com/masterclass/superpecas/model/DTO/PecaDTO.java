@@ -9,6 +9,8 @@ public class PecaDTO {
     String numeroSerie;
     String fabricante;
     String modeloCarro;
+    String carroNomeModelo;
+    String carroFabricante;
     Integer carroId;
 
     public int getId() {
@@ -65,5 +67,21 @@ public class PecaDTO {
 
     public void setCarroId(Integer carroId) {
         this.carroId = carroId;
+    }
+
+    public String getCarroNomeModelo() {
+        return carroNomeModelo;
+    }
+
+    public void setCarroNomeModelo(String carroNomeModelo) {
+        this.carroNomeModelo = carroNomeModelo;
+    }
+
+    public String getCarroFabricante() {
+        return carroFabricante;
+    }
+
+    public void setCarroFabricante(String carroFabricante) {
+        this.carroFabricante = carroFabricante;
     }
 }

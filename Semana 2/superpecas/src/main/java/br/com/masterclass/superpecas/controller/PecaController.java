@@ -63,21 +63,19 @@ public class PecaController {
     @Operation(summary = "Lista peças paginado", description = "Lista todas as peças por página.")
     @ApiResponses({ @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PecaDTO[].class)) })})
     @RequestMapping(value = "/listaTodosPaginado", method = RequestMethod.GET)
-    public ResponseEntity<Page<PecaModel>> listaPecasPaginado(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size) {
+    public ResponseEntity<Page<PecaDTO>> listaPecasPaginado(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size) {
         Pageable paging = PageRequest.of(page, size);
         Page<PecaModel> pecas = pecaService.listaPecasPaginado(paging);
-
-        return new ResponseEntity<>(pecas, HttpStatus.OK);
+        return new ResponseEntity<>(pecas.map(peca -> modelMapper.map(peca, PecaDTO.class)), HttpStatus.OK);
     }
 
     @Operation(summary = "Lista peças por nome ou número de série paginado", description = "Lista todas as peças por nome e/ou número de série por página.")
     @ApiResponses({ @ApiResponse(responseCode = "200", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = PecaDTO[].class)) })})
     @RequestMapping(value = {"/listaTodosPaginado/{termo}" }, method = RequestMethod.GET)
-    public ResponseEntity<Page<PecaModel>> listaPecasPorNomeEOuNumeroSeriePaginado(@PathVariable String termo, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size) {
+    public ResponseEntity<Page<PecaDTO>> listaPecasPorNomeEOuNumeroSeriePaginado(@PathVariable String termo, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size) {
         Pageable paging = PageRequest.of(page, size);
         Page<PecaModel> pecas = pecaService.listaPecasPorNomeEOuNumeroSerie(termo, paging);
-
-        return new ResponseEntity<>(pecas, HttpStatus.OK);
+        return new ResponseEntity<>(pecas.map(peca -> modelMapper.map(peca, PecaDTO.class)), HttpStatus.OK);
     }
 
     @Operation(summary = "Grava peça", description = "Grava uma nova peça no sistema.")

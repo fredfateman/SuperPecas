@@ -15,8 +15,8 @@ public interface PecaRepository extends JpaRepository<PecaModel, Integer> {
 
     Page<PecaModel> findAll(Pageable pageable);
 
-    @Query(value = "SELECT c FROM PecaModel c WHERE lower(c.nome) like lower(concat('%', ?1,'%')) OR lower(c.numeroSerie) like lower(concat('%', ?1,'%'))")
-    PecaModel findByNomeOrNumeroSerie(String nome, String numeroSerie);
+    @Query(value = "SELECT c FROM PecaModel c WHERE lower(c.nome) like lower(concat('%', ?1,'%')) AND lower(c.numeroSerie) like lower(concat('%', ?1,'%'))")
+    PecaModel findByNomeAndNumeroSerie(String nome, String numeroSerie);
 
 
     @Query(value = "SELECT c FROM PecaModel c WHERE lower(c.nome) like lower(concat('%', ?1,'%')) OR lower(c.numeroSerie) like lower(concat('%', ?1,'%')) OR lower(c.fabricante) like lower(concat('%', ?1,'%')) OR lower(c.modeloCarro) like lower(concat('%', ?1,'%'))")

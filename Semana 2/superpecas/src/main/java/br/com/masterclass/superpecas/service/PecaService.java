@@ -36,7 +36,7 @@ public class PecaService {
     }
 
     public PecaModel gravaPeca(PecaModel peca){
-        PecaModel pecaModel = pecaRepository.findByNomeOrNumeroSerie(peca.getNome(), peca.getNumeroSerie());
+        PecaModel pecaModel = pecaRepository.findByNomeAndNumeroSerie(peca.getNome(), peca.getNumeroSerie());
 
         if (pecaModel == null){
             return pecaRepository.save(peca);
@@ -52,7 +52,7 @@ public class PecaService {
             return null;
         }
 
-        PecaModel existeMesmoNome = pecaRepository.findByNomeOrNumeroSerie(peca.getNome(), peca.getNumeroSerie());
+        PecaModel existeMesmoNome = pecaRepository.findByNomeAndNumeroSerie(peca.getNome(), peca.getNumeroSerie());
 
         if (existeMesmoNome != null && existeMesmoNome.getId()!= peca.getId()){
             return null;

@@ -87,7 +87,7 @@ export class PecasEditComponent implements OnInit {
                         this.router.navigate(["/pecas"]);
                     },
                     error: (error) => {
-                        this._notifications.create("Erro", error.error, NotificationType.Error);
+                        this._notifications.create("Erro", "Ocorreu um erro ao cadastrar a peça", NotificationType.Error);
                     }
                 });
         }
@@ -100,7 +100,7 @@ export class PecasEditComponent implements OnInit {
                         this.router.navigate(["/pecas"]);
                     },
                     error: (error) => {
-                        this._notifications.create("Erro", error.error, NotificationType.Error);
+                        this._notifications.create("Erro", "Ocorreu um erro ao atualizar a peça", NotificationType.Error);
                     }
                 });
         }
