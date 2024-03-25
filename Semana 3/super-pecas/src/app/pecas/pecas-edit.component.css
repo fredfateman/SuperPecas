@@ -3,20 +3,16 @@
   align-items: center;
   padding: 20px;
   background-color: #f5f5f5;
-  /* Ou qualquer outra cor de fundo desejada */
 }
 
 .page-header .logo {
   width: 50px;
-  /* Ou o tamanho desejado para o seu logotipo */
   margin-right: 20px;
-  /* Espaço entre o logotipo e o título */
 }
 
 .page-header h1 {
   font-size: 24px;
   margin: 0;
-  /* Outros estilos para o título conforme necessário */
 }
 
 .listagem-carros {
